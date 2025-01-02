@@ -31,9 +31,9 @@
                 <div class="nav">
                     <ul>
                         <li><a class="menu-hover" href="index.html">Home</a></li>
-                        <li><a class="menu-hover" href="index.html">Travel</a></li>
+                        <li><a class="menu-hover" href="guide.html">Travel</a></li>
                         <li><a class="menu-hover" href="index.html">Book Now</a></li>
-                        <li><a class="menu-hover" href="index.html">Gallery</a></li>
+                        <li><a class="menu-hover" href="gallery.html">Gallery</a></li>
                         <li><a class="menu-hover" href="index.html">Holyday</a></li>
                         <li><a class="menu-hover" href="index.html">Blog</a></li>
                     </ul>
@@ -123,38 +123,36 @@
                         <div>
                             <span class="days"></span>
                             <div class="smalltext">Days</div>
-
                         </div>
                         <div>
                             <span class="hours"></span>
                             <div class="smalltext">Hours</div>
-
                         </div>
                         <div>
                             <span class="minutes"></span>
                             <div class="smalltext">Minutes</div>
-
                         </div>
                         <div>
                             <span class="seconds"></span>
                             <div class="smalltext">Seconds</div>
-
                         </div>
                     </div>
                 </div>
                 <div class="book-form">
-                    <form>
-                        <input type="text" id="fname" name="firstname" placeholder="Your Name...">
-                        <input type="text" id="lname" name="lastname" placeholder="Your Last Name...">
-                        <select name="country" id="country">
+                    <form id="bookingForm">
+                        <input type="text" id="fname" name="firstname" placeholder="Your Name..." required>
+                        <input type="text" id="lname" name="lastname" placeholder="Your Last Name..." required>
+                        <select name="country" id="country" required>
                             <option value="australia">Australia</option>
                             <option value="canada">Canada</option>
-                            <option value="india">USA</option>
+                            <option value="usa">USA</option>
                         </select>
-                        <textarea name="subject" id="subject" placeholder="Write something..."
-                            style="height: 200px;"></textarea>
+                        <textarea name="subject" id="subject" placeholder="Write something..." style="height: 200px;"></textarea>
                         <input type="submit" value="Submit">
                     </form>
+                    <div id="confirmationMessage" style="display: none; color: green; margin-top: 10px;">
+                        Thank you for your booking! We will contact you soon.
+                    </div>
                 </div>
             </div>
         </div>
@@ -369,10 +367,45 @@
         <p class="copyright">Copyright © </p>
     </footer>
 
+    <script>
+        document.getElementById("bookingForm").addEventListener("submit", async function (event) {
+            event.preventDefault();
+    
+            // Collect form data
+            const formData = {
+                firstname: document.getElementById("fname").value,
+                lastname: document.getElementById("lname").value,
+                country: document.getElementById("country").value,
+                subject: document.getElementById("subject").value,
+            };
+    
+            try {
+                // Send form data to the server
+                const response = await fetch("/submit-booking", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(formData),
+                });
+    
+                if (response.ok) {
+                    // Show confirmation message
+                    document.getElementById("confirmationMessage").style.display = "block";
+                    // Clear the form
+                    document.getElementById("bookingForm").reset();
+                } else {
+                    alert("Failed to submit your booking. Please try again.");
+                }
+            } catch (error) {
+                console.error("Error submitting the form:", error);
+                alert("An error occurred while submitting your booking.");
+            }
+        });
+    </script>
 
     <script src="js/jquery-3.1.1.min.js"></script>
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/extrenaljq.js"></script>
 </body>
-
 </html>
