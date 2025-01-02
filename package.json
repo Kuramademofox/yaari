@@ -1,0 +1,20 @@
+{
+  "name": "travel-booking-confirmation-system",
+  "version": "1.0.0",
+  "description": "A Node.js application for generating travel booking confirmations, sending emails, and submitting booking details to a Google Form.",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["travel", "booking", "invoice", "confirmation", "email", "google forms"],
+  "author": "Vemuri Sai Srinivas",
+  "license": "",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "express": "^4.19.2",
+    "jspdf": "^2.5.1",
+    "nodemailer": "^6.9.14",
+    "nodemon": "^3.1.4"
+  }
+}
